@@ -62,7 +62,7 @@ $app->post('makes/{id}/models', function($id, Request $request) {
         $vehicle->name = $name;
         $vehicle->make_id = $id;
         $vehicle->save();
-        response()->json($vehicle, 201);
+        return response()->json($vehicle, 201);
     }
     else
         return response('Bad query', 400);
@@ -71,7 +71,7 @@ $app->post('makes/{id}/models', function($id, Request $request) {
 $app->get('makes/{id}/models', function($id) {
 
     $make = Make::with('models')->findOrFail($id);
-    return response()->json(['total_items'=> $make->count(), 'items' => $make], 200);
+    return response()->json(['total_items'=> $make->models->count(), 'items' => $make], 200); // as the example sent
 });
 
 $app->get('vehicles', function() {
